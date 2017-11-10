@@ -2,6 +2,9 @@ import React from 'react'
  import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Shelf from './Shelf'
+import { Route, Link } from 'react-router-dom';
+
+
 
 class BooksApp extends React.Component {
   state = {
@@ -14,7 +17,7 @@ class BooksApp extends React.Component {
     books: [],
     showSearchPage: false
   }
- componentDidMount(){
+  componentDidMount(){
         BooksAPI.getAll().then((books) => {
             this.setState({books: books})
         //    console.log(books)
@@ -23,8 +26,8 @@ class BooksApp extends React.Component {
   render()  {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <div className="search-books">
+        <Route path='/search'  render={()=>(
+            <div className="search-books">
             <div className="search-books-bar">
               <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
               <div className="search-books-input-wrapper">
@@ -37,14 +40,14 @@ class BooksApp extends React.Component {
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
                 <input type="text" placeholder="Search by title or author"/>
-
               </div>
             </div>
             <div className="search-books-results">
               <ol className="books-grid"></ol>
             </div>
-          </div>
-        ) : (
+          </div>)}> 
+            </Route>
+          <Route exact path='/'  render={()=>(
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
@@ -68,11 +71,14 @@ class BooksApp extends React.Component {
                 changeShelf={this.changeShelf} />
               </div>
             </div>
-            <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+            <Link className='open-search'
+                       to='/search'>
+             <div className="open-search">
+              <a>Add a book</a>
             </div>
+             </Link> 
           </div>
-        )}
+                )}></Route>
       </div>
     )
   }
