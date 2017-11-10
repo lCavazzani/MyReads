@@ -54,15 +54,18 @@ class BooksApp extends React.Component {
                 <Shelf
                 books={this.state.books}
                 type_title='Currently Reading'
-                type_filter='currentlyReading' />
+                type_filter='currentlyReading'
+                changeShelf={this.changeShelf} />
                 <Shelf
                 books={this.state.books} 
                 type_title='Want to Read'
-                type_filter='wantToRead'/>
+                type_filter='wantToRead'
+                changeShelf={this.changeShelf}/>
                 <Shelf
                 books={this.state.books}
                 type_title='Read'
-                type_filter='read' />
+                type_filter='read'
+                changeShelf={this.changeShelf} />
               </div>
             </div>
             <div className="open-search">
@@ -73,6 +76,17 @@ class BooksApp extends React.Component {
       </div>
     )
   }
+    changeShelf = (book, shelf) => {
+        let newBooks = this.state.books;
+        let index = newBooks.findIndex(el => el.id === book.id);
+        newBooks[index] = book;       
+        console.log('book',newBooks);
+        console.log('shelf',shelf);
+        this.setState((prevState) => ({
+            books: newBooks
+        }))
+        BooksAPI.update(book, shelf)
+    }
 }
 
 export default BooksApp

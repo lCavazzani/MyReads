@@ -6,6 +6,7 @@ import React, {Component} from 'react';
 
 class Shelf extends Component{
     state ={
+        value: ''
     }
     render(){
         return(
@@ -14,7 +15,8 @@ class Shelf extends Component{
             <h2 className="bookshelf-title">{this.props.type_title}</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
-              {console.log(this.props.books)}
+              {//console.log(this.props.books)
+              }
 
                  {this.props.books.filter(books => books.shelf === this.props.type_filter).map(book=>
                                       <li key={book.id} >
@@ -22,7 +24,11 @@ class Shelf extends Component{
                                                   <div className="book-top">
                                                     <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}></div>
                                                     <div className="book-shelf-changer">
-                                                      <select>
+                                                      <select value={this.state.value} onChange={(e)=>{
+                                                                book.shelf = e.target.value;
+                                                                this.props.changeShelf(book,e.target.value)
+                                                              //  console.log(e.target.value)
+                                                            }}>
                                                         <option value="none" disabled>Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>
                                                         <option value="wantToRead">Want to Read</option>
@@ -43,5 +49,4 @@ class Shelf extends Component{
         )
     }
 }
-
 export default Shelf;
