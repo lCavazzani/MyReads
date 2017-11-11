@@ -32,7 +32,7 @@ class BooksApp extends React.Component {
         })
   }
   render()  {
-          const bookSearch = _.debounce((query, maxResults)=> { this.bookSearch(query, maxResults)},500)
+    const bookSearch = _.debounce((query, maxResults)=> { this.bookSearch(query, maxResults)},200)
     return (
       <div className="app">
         <Route path='/search'  render={()=>(
