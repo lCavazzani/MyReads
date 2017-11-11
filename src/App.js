@@ -4,6 +4,7 @@ import './App.css'
 import Shelf from './Shelf'
 import SearchBook from './SearchBook'
 import { Route, Link } from 'react-router-dom';
+import _ from 'lodash'
 
 
 
@@ -31,11 +32,12 @@ class BooksApp extends React.Component {
         })
   }
   render()  {
+          const bookSearch = _.debounce((query, maxResults)=> { this.bookSearch(query, maxResults)},500)
     return (
       <div className="app">
         <Route path='/search'  render={()=>(
             <SearchBook 
-               onSearchTermChange={this.bookSearch}
+               onSearchTermChange={bookSearch}
                changeShelf={this.changeShelf}
                searchedBooks={this.state.searched_books}/>
                 )}> 

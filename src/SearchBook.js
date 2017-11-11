@@ -30,7 +30,35 @@ class SearchBook extends Component{
                   <ol className="books-grid">
                     {this.props.searchedBooks.map(book=>
                                       <li key={book.id} >
-                                               book
+                                               <div className="book">
+                                                  <div className="book-top">
+                                                    {book.imageLinks ? (
+                                                    <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}></div>
+                                                          ) : (
+                                                          <div className="book-cover" style={{ width: 128, height: 188, }}></div>
+                                                      )
+                                                    }
+                                                    <div className="book-shelf-changer">
+                                                      <select value={this.state.value} onChange={(e)=>{
+                                                                book.shelf = e.target.value;
+                                                                this.props.changeShelf(book,e.target.value)
+                                                              //  console.log(e.target.value)
+                                                            }}>
+                                                        <option value="none" disabled>Move to...</option>
+                                                        <option value="currentlyReading">Currently Reading</option>
+                                                        <option value="wantToRead">Want to Read</option>
+                                                        <option value="read">Read</option>
+                                                        <option value="none">None</option>
+                                                      </select>
+                                                    </div>
+                                                  </div>
+                                                  <div className="book-title">{book.name}</div>
+                                                 {book.imageLinks ? (
+                                                  <div className="book-authors">{book.authors}</div>
+                                                       ) : (
+                                                    <div className="book-authors">{book.title}</div>
+                                                   )}
+                                                </div>
                                           </li>
                                          )}
                   </ol>
