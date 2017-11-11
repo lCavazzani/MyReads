@@ -1,17 +1,21 @@
 import React, {Component} from 'react';
+import {Link } from 'react-router-dom';
 
 
 class SearchBook extends Component{
     state ={
         search: '',
         books:[],
-        value: ''
+        value: '', 
+        type: ''
     }
     render(){
         return(
             <div className="search-books">
                 <div className="search-books-bar">
+                 <Link to='/'>
                   <a className="close-search">Close</a>
+                 </Link>
                   <div className="search-books-input-wrapper">
                     {/*
                       NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -35,13 +39,13 @@ class SearchBook extends Component{
                                                     {book.imageLinks ? (
                                                     <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}></div>
                                                           ) : (
-                                                          <div className="book-cover" style={{ width: 128, height: 188, }}></div>
+                                                          <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url('./icons/content.jpeg')`}}></div>
                                                       )
                                                     }
                                                     <div className="book-shelf-changer">
-                                                      <select value={this.state.value} onChange={(e)=>{
+                                                      <select value={this.state.type} onChange={(e)=>{
                                                                 book.shelf = e.target.value;
-                                                                this.props.changeShelf(book,e.target.value)
+                                                                this.props.addToShelf(book, e.target.value)
                                                               //  console.log(e.target.value)
                                                             }}>
                                                         <option value="none" disabled>Move to...</option>

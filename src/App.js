@@ -38,7 +38,7 @@ class BooksApp extends React.Component {
         <Route path='/search'  render={()=>(
             <SearchBook 
                onSearchTermChange={bookSearch}
-               changeShelf={this.changeShelf}
+               addToShelf={this.addToShelf}
                searchedBooks={this.state.searched_books}/>
                 )}> 
             </Route>
@@ -70,7 +70,7 @@ class BooksApp extends React.Component {
                        to='/search'>
              <div className="open-search">
               <a>Add a book</a>
-            </div>
+             </div>
              </Link> 
           </div>
                 )}></Route>
@@ -82,11 +82,20 @@ class BooksApp extends React.Component {
         let index = newBooks.findIndex(el => el.id === book.id);
         newBooks[index] = book;       
         console.log('book',newBooks);
-        console.log('shelf',shelf);
         this.setState((prevState) => ({
             books: newBooks
         }))
+        console.log('newbooks',this.state.books);
         BooksAPI.update(book, shelf)
+    }
+    
+    addToShelf = (book, shelf) => {
+        this.setState((prevState) => ({
+            books: prevState.books.concat([book])
+        }))
+        console.log('now', this.state.books)
+        BooksAPI.update(book, shelf)
+
     }
     
     
