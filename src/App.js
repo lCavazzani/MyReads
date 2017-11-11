@@ -8,9 +8,10 @@ import { Route, Link } from 'react-router-dom';
 
 
 class BooksApp extends React.Component {
+    
   state = {
     books: [],
-      searched_books: []
+    searched_books: []
   }
   componentDidMount(){
         BooksAPI.getAll().then((books) => {
@@ -18,12 +19,25 @@ class BooksApp extends React.Component {
         //    console.log(books)
         })
     }
+  bookSearch = (query, maxResults) => {
+      BooksAPI.search(query, maxResults).then((books) => {
+          if(books.error){
+              console.log('error')
+          }else{
+         this.setState({searched_books: books})
+          console.log('resultado', books)
+          }
+        
+        })
+  }
   render()  {
     return (
       <div className="app">
         <Route path='/search'  render={()=>(
             <SearchBook 
-            onSearchTermChange={this.bookSearch}/>
+               onSearchTermChange={this.bookSearch}
+               changeShelf={this.changeShelf}
+               searchedBooks={this.state.searched_books}/>
                 )}> 
             </Route>
           <Route exact path='/'  render={()=>(
@@ -72,10 +86,8 @@ class BooksApp extends React.Component {
         }))
         BooksAPI.update(book, shelf)
     }
-     bookSearch = (query, maxResults) => {
-      BooksAPI.search(query, maxResults).then(() => {
-        })
-  }
+    
+    
 }
 
 export default BooksApp
