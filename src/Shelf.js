@@ -15,9 +15,6 @@ class Shelf extends Component{
             <h2 className="bookshelf-title">{this.props.type_title}</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
-              {//console.log(this.props.books)
-              }
-
                  {this.props.books.filter(books => books.shelf === this.props.type_filter).map(book=>
                                       <li key={book.id} >
                                                <div className="book">
@@ -27,7 +24,6 @@ class Shelf extends Component{
                                                       <select value={this.state.value} onChange={(e)=>{
                                                                 book.shelf = e.target.value;
                                                                 this.props.changeShelf(book,e.target.value)
-                                                              //  console.log(e.target.value)
                                                             }}>
                                                         <option value="none" disabled>Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>

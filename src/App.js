@@ -9,7 +9,7 @@ import _ from 'lodash'
 
 
 class BooksApp extends React.Component {
-    
+
   state = {
     books: [],
     searched_books: []
@@ -17,18 +17,16 @@ class BooksApp extends React.Component {
   componentDidMount(){
         BooksAPI.getAll().then((books) => {
             this.setState({books: books})
-        //    console.log(books)
         })
     }
   bookSearch = (query, maxResults) => {
       BooksAPI.search(query, maxResults).then((books) => {
           if(books.error){
-              console.log('error')
+            //onError
           }else{
          this.setState({searched_books: books})
-          console.log('resultado', books)
           }
-        
+
         })
   }
   render()  {
@@ -36,11 +34,11 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route path='/search'  render={()=>(
-            <SearchBook 
+            <SearchBook
                onSearchTermChange={bookSearch}
                addToShelf={this.addToShelf}
                searchedBooks={this.state.searched_books}/>
-                )}> 
+                )}>
             </Route>
           <Route exact path='/'  render={()=>(
           <div className="list-books">
@@ -55,7 +53,7 @@ class BooksApp extends React.Component {
                 type_filter='currentlyReading'
                 changeShelf={this.changeShelf} />
                 <Shelf
-                books={this.state.books} 
+                books={this.state.books}
                 type_title='Want to Read'
                 type_filter='wantToRead'
                 changeShelf={this.changeShelf}/>
@@ -71,7 +69,7 @@ class BooksApp extends React.Component {
              <div className="open-search">
               <a>Add a book</a>
              </div>
-             </Link> 
+             </Link>
           </div>
                 )}></Route>
       </div>
@@ -80,25 +78,22 @@ class BooksApp extends React.Component {
     changeShelf = (book, shelf) => {
         let newBooks = this.state.books;
         let index = newBooks.findIndex(el => el.id === book.id);
-        newBooks[index] = book;       
-        console.log('book',newBooks);
+        newBooks[index] = book;
         this.setState((prevState) => ({
             books: newBooks
         }))
-        console.log('newbooks',this.state.books);
         BooksAPI.update(book, shelf)
     }
-    
+
     addToShelf = (book, shelf) => {
         this.setState((prevState) => ({
             books: prevState.books.concat([book])
         }))
-        console.log('now', this.state.books)
         BooksAPI.update(book, shelf)
 
     }
-    
-    
+
+
 }
 
 export default BooksApp
