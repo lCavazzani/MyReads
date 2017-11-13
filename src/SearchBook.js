@@ -6,7 +6,7 @@ class SearchBook extends Component{
     state ={
         search: '',
         books:[],
-        value: '', 
+        value: '',
         type: ''
     }
     render(){
@@ -25,7 +25,7 @@ class SearchBook extends Component{
                       However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                       you don't find a specific author or title. Every search is limited by search terms.
                     */}
-                    <input type="text" placeholder="Search by title or author"  
+                    <input type="text" placeholder="Search by title or author"
                       value={this.state.search}
                       onChange={event => this.onInputChange(event.target.value)}/>
                   </div>
@@ -46,7 +46,6 @@ class SearchBook extends Component{
                                                       <select value={this.state.type} onChange={(e)=>{
                                                                 book.shelf = e.target.value;
                                                                 this.props.addToShelf(book, e.target.value)
-                                                              //  console.log(e.target.value)
                                                             }}>
                                                         <option value="none" disabled>Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>
@@ -77,7 +76,6 @@ class SearchBook extends Component{
               this.props.onSearchTermChange(search, 10)
           }else{
             this.setState({search})
-              console.log('vazio')
           }
     }
 }
